@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -6,7 +7,12 @@ namespace NoNameGun
     [CreateAssetMenu(fileName = "PlayerInputSO", menuName = "Scriptable Objects/PlayerInputSO")]
     public class PlayerInputSO : ScriptableObject, InputSystem_Actions.IPlayerActions
     {
-        
+        //입력 액션이벤트
+        public event Action AttackEvt;
+        public event Action JumpEvt;
+        public event Action SprintEvt;
+
+        private Vector2 _moveDir;
 
         private InputSystem_Actions _inputActions;
 
