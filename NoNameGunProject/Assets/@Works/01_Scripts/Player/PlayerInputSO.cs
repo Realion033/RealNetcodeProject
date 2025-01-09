@@ -12,7 +12,8 @@ namespace NoNameGun
         public event Action JumpEvt;
         public event Action SprintEvt;
 
-        private Vector2 _moveDir;
+        public Vector2 InputDir { get; private set; }
+        public Vector2 MouseDelta { get; private set; }
 
         private InputSystem_Actions _inputActions;
 
@@ -36,27 +37,27 @@ namespace NoNameGun
 
         public void OnAttack(InputAction.CallbackContext context)
         {
-            throw new System.NotImplementedException();
+            //throw new System.NotImplementedException();
         }
 
         public void OnJump(InputAction.CallbackContext context)
         {
-            throw new System.NotImplementedException();
+            //throw new System.NotImplementedException();
         }
 
         public void OnLook(InputAction.CallbackContext context)
         {
-            throw new System.NotImplementedException();
+            MouseDelta = context.ReadValue<Vector2>();
         }
 
         public void OnMove(InputAction.CallbackContext context)
         {
-            throw new System.NotImplementedException();
+            InputDir = context.ReadValue<Vector2>();
         }
 
         public void OnSprint(InputAction.CallbackContext context)
         {
-            throw new System.NotImplementedException();
+            //throw new System.NotImplementedException();
         }
 
         #endregion
