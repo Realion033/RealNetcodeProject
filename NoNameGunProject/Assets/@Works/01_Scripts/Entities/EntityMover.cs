@@ -25,6 +25,9 @@ namespace NoNameGun
         private Rigidbody _rbCompo;
         private Vector2 _moveVelo;
 
+        public NetworkVariable<Vector3> Position = new NetworkVariable<Vector3>();
+        public NetworkVariable<Quaternion> Rotation = new NetworkVariable<Quaternion>();
+
         //컴포넌트 Init
         public void Init(Entity entity)
         {
@@ -35,15 +38,20 @@ namespace NoNameGun
 
         private void FixedUpdate()
         {
-            // if (IsOwner)
+            // if (!IsOwner)
             // {
-            //     Move();
+            //     return;
             // }
 
             Move();
 
-            DebugCode();
+            if (IsServer)
+            {
+                Position.Value = transform.position;
+                Rotation.Value = transform.rotation;
+            }
         }
+
 
         private void DebugCode()
         {
