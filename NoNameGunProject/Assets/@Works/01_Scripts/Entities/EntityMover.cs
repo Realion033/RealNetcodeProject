@@ -38,18 +38,14 @@ namespace NoNameGun
 
         private void FixedUpdate()
         {
-            // if (!IsOwner)
-            // {
-            //     return;
-            // }
-
-            Move();
-
-            if (IsServer)
+            if (!IsOwner)
             {
-                Position.Value = transform.position;
-                Rotation.Value = transform.rotation;
+                return;
             }
+
+            Vector2 inputDir = _inputSO.InputDir;
+            float mouseDeltaX = _inputSO.MouseDelta.x;
+            SubmitMoveInputServerRpc(inputDir, mouseDeltaX);
         }
 
 
@@ -58,16 +54,28 @@ namespace NoNameGun
             Debug.Log(IsGroundDetected());
         }
 
-        private void Move()
+        [ServerRpc]
+        private void SubmitMoveInputServerRpc(Vector2 inputDir, float mouseDeltaX)
         {
-            Vector3 moveDirection = transform.forward * _inputSO.InputDir.y + transform.right * _inputSO.InputDir.x;
-            _rbCompo.MovePosition(_rbCompo.position + moveDirection.normalized * _moveSpeed * Time.fixedDeltaTime);
+            // Perform movement on the server
+            Move(inputDir, mouseDeltaX);
 
-            OnMovement?.Invoke(moveDirection.normalized * _moveSpeed);
-
-            transform.Rotate(Vector3.up * _inputSO.MouseDelta.x);
+            // Update NetworkVariables to sync position and rotation with all clients
+            Position.Value = transform.position;
+            Rotation.Value = transform.rotation;
         }
 
+        private void Move(Vector2 inputDir, float mouseDeltaX)
+        {
+            Vector3 moveDirection = transform.forward * inputDir.y + transform.right * inputDir.x;
+            _rbCompo.MovePosition(_rbCompo.position + moveDirection.normalized * _moveSpeed * Time.fixedDeltaTime);
+
+            // Rotate based on mouse input
+            transform.Rotate(Vector3.up * mouseDeltaX);
+
+            // Invoke movement event
+            OnMovement?.Invoke(moveDirection.normalized * _moveSpeed);
+        }
 
         public void SetMovement(Vector2 movement)
         {
