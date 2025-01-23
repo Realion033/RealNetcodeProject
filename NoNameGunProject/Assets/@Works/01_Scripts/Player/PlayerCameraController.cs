@@ -1,7 +1,7 @@
 using Unity.Netcode;
 using UnityEngine;
 
-namespace NoNameGun
+namespace NoNameGun.Players
 {
     public class PlayerCameraManager : NetworkBehaviour
     {
