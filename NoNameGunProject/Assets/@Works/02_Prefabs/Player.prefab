@@ -2390,12 +2390,12 @@ GameObject:
   - component: {fileID: 1168837573157813077}
   - component: {fileID: 6855525719803860092}
   - component: {fileID: 4163233080742050771}
-  - component: {fileID: 2047784794521568238}
   - component: {fileID: 5340636463536188514}
   - component: {fileID: 1636828745802594009}
   - component: {fileID: 5443562181779795545}
   - component: {fileID: 2475941046417270063}
   - component: {fileID: 6340908045133752171}
+  - component: {fileID: 2568716733033343669}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -2458,33 +2458,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <PlayerInput>k__BackingField: {fileID: 11400000, guid: d6f1417ce7965e84cbb62cc853f542ad, type: 2}
---- !u!114 &2047784794521568238
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7172008234619209737}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 96b05e0c7fa70ac45a80389090a37a04, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ShowTopMostFoldoutHeaderGroup: 1
-  _inputSO: {fileID: 11400000, guid: d6f1417ce7965e84cbb62cc853f542ad, type: 2}
-  _groundCheckTrm: {fileID: 2153225478886318288}
-  _checkerSize: {x: 0.5, y: 0.2, z: 0.5}
-  _whatIsGround:
-    serializedVersion: 2
-    m_Bits: 256
-  _moveSpeed: 5
-  _mouseSensitivity: 1
-  _cameraTransform: {fileID: 4833278752817944847}
-  _cameraPitchLimit: 80
-  Position:
-    m_InternalValue: {x: 0, y: 0, z: 0}
-  Rotation:
-    m_InternalValue: {x: 0, y: 0, z: 0, w: 0}
+  MoveSpeed: 5
+  MouseSensitivity: 2
 --- !u!54 &5340636463536188514
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2601,7 +2576,32 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
+  _cameraTransform: {fileID: 4833278752817944847}
+  _cameraPitchLimit: 80
   _playerCam: {fileID: 2500996760296809091}
+  _player: {fileID: 0}
+--- !u!114 &2568716733033343669
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7172008234619209737}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a58c512b9acbd441b1b04489b86f271, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  _groundCheckTrm: {fileID: 2153225478886318288}
+  _checkerSize: {x: 0, y: 0, z: 0}
+  _whatIsGround:
+    serializedVersion: 2
+    m_Bits: 256
+  Position:
+    m_InternalValue: {x: 0, y: 0, z: 0}
+  Rotation:
+    m_InternalValue: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &7191565093103036431
 GameObject:
   m_ObjectHideFlags: 0

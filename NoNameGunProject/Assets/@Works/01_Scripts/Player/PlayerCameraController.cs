@@ -3,14 +3,32 @@ using UnityEngine;
 
 namespace NoNameGun.Players
 {
-    public class PlayerCameraManager : NetworkBehaviour
+    public class PlayerCameraController : NetworkBehaviour
     {
+        [Header("Camera Settings")]
+        [SerializeField] private Transform _cameraTransform;
+        [SerializeField] private float _cameraPitchLimit = 80f;
         [SerializeField] private GameObject _playerCam;
+
+        private Player _player;
+        //private float _previousMouseDeltaX;
+        private float _cameraPitch;
+
+        private void Awake()
+        {
+            _player = GetComponent<Player>();
+        }
 
         private void Start()
         {
             // 각 클라이언트에서 카메라 활성/비활성 처리
             ManageCamera();
+        }
+
+        private void Update()
+        {
+            Vector2 mouseDelta = _player.PlayerInput.MouseDelta;
+            HandleCameraRotation(mouseDelta.y);
         }
 
         public override void OnNetworkSpawn()
@@ -39,6 +57,18 @@ namespace NoNameGun.Players
                 _playerCam.SetActive(false);
                 Debug.Log("Player camera deactivated for non-owner.");
             }
+        }
+
+        private void HandleCameraRotation(float mouseDeltaY)
+        {
+            if (_cameraTransform == null) return;
+
+            // 카메라 피치 계산 (위아래 회전 제한)
+            _cameraPitch -= mouseDeltaY * _player.MouseSensitivity;
+            _cameraPitch = Mathf.Clamp(_cameraPitch, -_cameraPitchLimit, _cameraPitchLimit);
+
+            // 카메라 회전 적용
+            _cameraTransform.localRotation = Quaternion.Euler(_cameraPitch, 0f, 0f);
         }
     }
 }

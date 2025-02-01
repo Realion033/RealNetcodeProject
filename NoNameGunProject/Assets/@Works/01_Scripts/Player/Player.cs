@@ -1,4 +1,3 @@
-using NoNameGun.Entities;
 using UnityEngine;
 
 namespace NoNameGun.Players
@@ -9,17 +8,21 @@ namespace NoNameGun.Players
         Run,
         Fall,
         Attack,
+        Reload,
         Dash
     }
-    public class Player : Entity
+    public class Player : MonoBehaviour
     {
         [field: SerializeField] public PlayerInputSO PlayerInput { get; private set; }
+
+        [Header("Player Stats")]
+        public float MoveSpeed = 5f;
+        public float MouseSensitivity = 2f;
+        
         private Animator _animator;
 
-        protected override void Awake()
+        private void Awake()
         {
-            base.Awake();
-
             _animator = GetComponent<Animator>();
         }
     }
