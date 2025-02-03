@@ -2432,7 +2432,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 1792938839
+  GlobalObjectIdHash: 3891375605
   InScenePlacedSourceGlobalObjectIdHash: 1282814667
   DeferredDespawnTick: 0
   Ownership: 1
@@ -2459,7 +2459,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <PlayerInput>k__BackingField: {fileID: 11400000, guid: d6f1417ce7965e84cbb62cc853f542ad, type: 2}
   MoveSpeed: 5
-  MouseSensitivity: 2
+  JumpPower: 300
+  MouseSensitivity: 1
 --- !u!54 &5340636463536188514
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2579,7 +2580,6 @@ MonoBehaviour:
   _cameraTransform: {fileID: 4833278752817944847}
   _cameraPitchLimit: 80
   _playerCam: {fileID: 2500996760296809091}
-  _player: {fileID: 0}
 --- !u!114 &2568716733033343669
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2594,7 +2594,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
   _groundCheckTrm: {fileID: 2153225478886318288}
-  _checkerSize: {x: 0, y: 0, z: 0}
+  _checkerSize: {x: 0.8, y: 0.15, z: 0.8}
   _whatIsGround:
     serializedVersion: 2
     m_Bits: 256

@@ -43,7 +43,10 @@ namespace NoNameGun
 
         public void OnJump(InputAction.CallbackContext context)
         {
-            //throw new System.NotImplementedException();
+            if (context.performed)
+            {
+                JumpEvt?.Invoke();
+            }
         }
 
         public void OnLook(InputAction.CallbackContext context)

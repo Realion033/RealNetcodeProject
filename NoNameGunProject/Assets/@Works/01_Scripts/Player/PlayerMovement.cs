@@ -25,6 +25,13 @@ namespace NoNameGun.Players
         {
             _player = GetComponent<Player>();
             _rbCompo = GetComponent<Rigidbody>();
+
+            _player.PlayerInput.JumpEvt += HandleJumpEvt;
+        }
+
+        private void OnDisable()
+        {
+            _player.PlayerInput.JumpEvt -= HandleJumpEvt;
         }
 
         private void FixedUpdate()
@@ -36,22 +43,11 @@ namespace NoNameGun.Players
             Vector2 mouseDelta = _player.PlayerInput.MouseDelta;
 
             // 주기적으로 서버로 입력 값 전송
-            SubmitMoveInputServerRpc(inputDir, mouseDelta.x);
+            //PlayerMoveServerRpc(inputDir, mouseDelta.x);
+            Move(inputDir, mouseDelta.x);
         }
 
 
-        [ServerRpc]
-        private void SubmitMoveInputServerRpc(Vector2 inputDir, float mouseDeltaX)
-        {
-            Move(inputDir, mouseDeltaX);
-
-            if (Vector3.Distance(Position.Value, transform.position) > 0.01f ||
-                Quaternion.Angle(Rotation.Value, transform.rotation) > 0.1f)
-            {
-                Position.Value = transform.position;
-                Rotation.Value = transform.rotation;
-            }
-        }
 
         private void Move(Vector2 inputDir, float mouseDeltaX)
         {
@@ -65,11 +61,25 @@ namespace NoNameGun.Players
 
             // 이동 이벤트 발생
             OnMovement?.Invoke(moveDirection.normalized * _player.MoveSpeed);
+            Debug.Log("asdfasdddddddf");
+            PlayerMoveServerRpc();
         }
 
-        public virtual bool IsGroundDetected()
+        public bool IsGroundDetected()
             => Physics.BoxCast(_groundCheckTrm.position, _checkerSize * 0.5f, Vector3.down,
                 Quaternion.identity, _checkerSize.y, _whatIsGround);
+
+        private void HandleJumpEvt()
+        {
+            if (IsOwner && IsGroundDetected())
+            {
+                Debug.Log("ground detected");
+                _rbCompo.AddForce(Vector3.up * _player.JumpPower);
+
+                //Rpc 동기화
+                //PlayerMoveServerRpc();
+            }
+        }
 
 #if UNITY_EDITOR
         private void OnDrawGizmosSelected()
@@ -83,5 +93,26 @@ namespace NoNameGun.Players
             }
         }
 #endif
+
+        #region RPCs
+        //private void PlayerMoveServerRpc(Vector2 inputDir, float mouseDeltaX)
+        [ServerRpc]
+        private void PlayerMoveServerRpc()
+        {
+            // Move(inputDir, mouseDeltaX);
+
+            // if (Vector3.Distance(Position.Value, transform.position) > 0.01f ||
+            //     Quaternion.Angle(Rotation.Value, transform.rotation) > 0.1f)
+            // {
+            //     Position.Value = transform.position;
+            //     Rotation.Value = transform.rotation;
+            // }
+
+            Debug.Log("asdfasdf");
+            Position.Value = transform.position;
+            Rotation.Value = transform.rotation;
+        }
+
+        #endregion
     }
 }

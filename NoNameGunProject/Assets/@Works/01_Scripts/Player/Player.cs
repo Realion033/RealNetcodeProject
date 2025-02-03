@@ -17,13 +17,14 @@ namespace NoNameGun.Players
 
         [Header("Player Stats")]
         public float MoveSpeed = 5f;
+        public float JumpPower = 3f;
         public float MouseSensitivity = 2f;
-        
-        private Animator _animator;
+
+        private PlayerAnimation _playerAnim;
 
         private void Awake()
         {
-            _animator = GetComponent<Animator>();
+            _playerAnim = GetComponentInChildren<PlayerAnimation>();
         }
     }
 }
