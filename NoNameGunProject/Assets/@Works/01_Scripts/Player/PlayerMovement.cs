@@ -17,9 +17,6 @@ namespace NoNameGun.Players
         private Player _player;
         private Rigidbody _rbCompo;
 
-        public NetworkVariable<Vector3> Position = new NetworkVariable<Vector3>();
-        public NetworkVariable<Quaternion> Rotation = new NetworkVariable<Quaternion>();
-
         // 컴포넌트 초기화
         private void Awake()
         {
@@ -34,7 +31,7 @@ namespace NoNameGun.Players
             _player.PlayerInput.JumpEvt -= HandleJumpEvt;
         }
 
-        private void FixedUpdate()
+        private void Update()
         {
             if (!IsOwner) return;
 
@@ -43,8 +40,7 @@ namespace NoNameGun.Players
             Vector2 mouseDelta = _player.PlayerInput.MouseDelta;
 
             // 주기적으로 서버로 입력 값 전송
-            //PlayerMoveServerRpc(inputDir, mouseDelta.x);
-            Move(inputDir, mouseDelta.x);
+            MoveServerRpc(inputDir, mouseDelta.x);
         }
 
 
@@ -53,7 +49,7 @@ namespace NoNameGun.Players
         {
             // 이동 처리
             Vector3 moveDirection = transform.forward * inputDir.y + transform.right * inputDir.x;
-            _rbCompo.MovePosition(_rbCompo.position + moveDirection.normalized * _player.MoveSpeed * Time.fixedDeltaTime);
+            _rbCompo.MovePosition(_rbCompo.position + moveDirection.normalized * _player.MoveSpeed * Time.deltaTime);
 
             // 캐릭터 회전 처리 (좌우)
             Quaternion deltaRotation = Quaternion.Euler(0f, mouseDeltaX * _player.MouseSensitivity, 0f);
@@ -61,8 +57,6 @@ namespace NoNameGun.Players
 
             // 이동 이벤트 발생
             OnMovement?.Invoke(moveDirection.normalized * _player.MoveSpeed);
-            Debug.Log("asdfasdddddddf");
-            PlayerMoveServerRpc();
         }
 
         public bool IsGroundDetected()
@@ -73,11 +67,7 @@ namespace NoNameGun.Players
         {
             if (IsOwner && IsGroundDetected())
             {
-                Debug.Log("ground detected");
-                _rbCompo.AddForce(Vector3.up * _player.JumpPower);
-
-                //Rpc 동기화
-                //PlayerMoveServerRpc();
+                JumpServerRpc(_player.JumpPower);
             }
         }
 
@@ -95,22 +85,17 @@ namespace NoNameGun.Players
 #endif
 
         #region RPCs
-        //private void PlayerMoveServerRpc(Vector2 inputDir, float mouseDeltaX)
-        [ServerRpc]
-        private void PlayerMoveServerRpc()
+
+        [ServerRpc()]
+        private void MoveServerRpc(Vector2 inputDir, float mouseDeltaX)
         {
-            // Move(inputDir, mouseDeltaX);
+            Move(inputDir, mouseDeltaX);
+        }
 
-            // if (Vector3.Distance(Position.Value, transform.position) > 0.01f ||
-            //     Quaternion.Angle(Rotation.Value, transform.rotation) > 0.1f)
-            // {
-            //     Position.Value = transform.position;
-            //     Rotation.Value = transform.rotation;
-            // }
-
-            Debug.Log("asdfasdf");
-            Position.Value = transform.position;
-            Rotation.Value = transform.rotation;
+        [ServerRpc]
+        private void JumpServerRpc(float JumpPower)
+        {
+            _rbCompo.AddForce(Vector3.up * JumpPower);
         }
 
         #endregion
