@@ -86,13 +86,13 @@ namespace NoNameGun.Players
 
         #region RPCs
 
-        [ServerRpc()]
+        [ServerRpc(RequireOwnership = false)]
         private void MoveServerRpc(Vector2 inputDir, float mouseDeltaX)
         {
             Move(inputDir, mouseDeltaX);
         }
 
-        [ServerRpc]
+        [ServerRpc(RequireOwnership = false)]
         private void JumpServerRpc(float JumpPower)
         {
             _rbCompo.AddForce(Vector3.up * JumpPower);
