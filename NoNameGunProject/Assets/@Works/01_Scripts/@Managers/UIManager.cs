@@ -1,26 +1,32 @@
 using UnityEngine;
 using System.Collections.Generic;
+using NoNameGun.UI;
 
 namespace NoNameGun.Managers
 {
     public class UIManager : MonoSingleton<UIManager>
     {
-        private Dictionary<string, GameObject> uiPanels = new Dictionary<string, GameObject>();     
+        private Dictionary<string, UIBase> uiPanels = new Dictionary<string, UIBase>();     
 
         private void Start()
         {
             foreach (Transform child in transform)
             {
-                uiPanels[child.gameObject.name] = child.gameObject;
-                child.gameObject.SetActive(false);
+                UIBase uiBase = child.GetComponent<UIBase>();
+
+                if (uiBase != null)
+                {
+                    uiPanels[child.gameObject.name] = uiBase;
+                    child.gameObject.SetActive(false);
+                }
             }
         }
 
         public void ShowPanel(string panelName)
         {
-            if (uiPanels.TryGetValue(panelName, out GameObject panel))
+            if (uiPanels.TryGetValue(panelName, out UIBase panel))
             {
-                panel.SetActive(true);
+                panel.Show();
             }
             else
             {
@@ -30,9 +36,9 @@ namespace NoNameGun.Managers
 
         public void HidePanel(string panelName)
         {
-            if (uiPanels.TryGetValue(panelName, out GameObject panel))
+            if (uiPanels.TryGetValue(panelName, out UIBase panel))
             {
-                panel.SetActive(false);
+                panel.Hide();
             }
             else
             {
@@ -42,9 +48,9 @@ namespace NoNameGun.Managers
 
         public void TogglePanel(string panelName)
         {
-            if (uiPanels.TryGetValue(panelName, out GameObject panel))
+            if (uiPanels.TryGetValue(panelName, out UIBase panel))
             {
-                panel.SetActive(!panel.activeSelf);
+                panel.ToggleVisibility();
             }
             else
             {
