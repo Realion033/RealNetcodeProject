@@ -26,5 +26,10 @@ namespace NoNameGun.Players
         {
             _playerAnim = GetComponentInChildren<PlayerAnimation>();
         }
+
+        private void Update()
+        {
+            Debug.Log($"x : {PlayerInput.InputDir.x}, y : {PlayerInput.InputDir.y}");
+        }
     }
 }
