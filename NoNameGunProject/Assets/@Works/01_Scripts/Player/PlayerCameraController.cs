@@ -7,7 +7,7 @@ namespace NoNameGun.Players
     {
         [Header("Camera Settings")]
         [SerializeField] private Transform _cameraTransform;
-        [SerializeField] private float _cameraPitchLimit = 80f;
+        [SerializeField] private float _cameraPitchLimit = 70f;
         [SerializeField] private GameObject _playerCam;
 
         private Player _player;
