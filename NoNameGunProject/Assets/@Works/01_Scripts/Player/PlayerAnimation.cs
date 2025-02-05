@@ -24,18 +24,20 @@ namespace NoNameGun.Players
 
         private void UpdateMoveAnimation(Vector2 inputDir)
         {
-            // 클라이언트에서 애니메이션 갱신 후, 서버에도 동기화 요청
-            _animator.SetFloat("MoveX", inputDir.x);
-            _animator.SetFloat("MoveY", inputDir.y);
+            if (!IsOwner)
+            {
+                return;
+            }
 
-            //UpdateMoveAnimationServerRpc(inputDir);
+            UpdateMoveAnimationServerRpc(inputDir);
         }
 
-        // [ServerRpc]
-        // private void UpdateMoveAnimationServerRpc(Vector2 inputDir)
-        // {
-        //     UpdateMoveAnimationClientRpc(inputDir);
-        // }
+        [ServerRpc]
+        private void UpdateMoveAnimationServerRpc(Vector2 inputDir)
+        {
+            _animator.SetFloat("MoveX", inputDir.x);
+            _animator.SetFloat("MoveY", inputDir.y);
+        }
 
         // [ClientRpc]
         // private void UpdateMoveAnimationClientRpc(Vector2 inputDir)

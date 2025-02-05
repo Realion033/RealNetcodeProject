@@ -43,8 +43,6 @@ namespace NoNameGun.Players
             MoveServerRpc(inputDir, mouseDelta.x);
         }
 
-
-
         private void Move(Vector2 inputDir, float mouseDeltaX)
         {
             // 이동 처리
