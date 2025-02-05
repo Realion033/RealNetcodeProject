@@ -56,7 +56,7 @@ namespace NoNameGun.Players
             _rbCompo.MoveRotation(_rbCompo.rotation * deltaRotation);
 
             // 이동 이벤트 발생
-            OnMovement?.Invoke(moveDirection.normalized * _player.MoveSpeed);
+            OnMovement?.Invoke(inputDir);
         }
 
         public bool IsGroundDetected()

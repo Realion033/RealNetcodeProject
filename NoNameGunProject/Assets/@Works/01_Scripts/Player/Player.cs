@@ -20,11 +20,13 @@ namespace NoNameGun.Players
         public float JumpPower = 3f;
         public float MouseSensitivity = 2f;
 
-        private PlayerAnimation _playerAnim;
+        public PlayerMovement PlayerMovement { get; private set; }
+        public PlayerAnimation PlayerAnim { get; private set; }
 
         private void Awake()
         {
-            _playerAnim = GetComponentInChildren<PlayerAnimation>();
+            PlayerMovement = GetComponent<PlayerMovement>();
+            PlayerAnim = GetComponentInChildren<PlayerAnimation>();
         }
 
         private void Update()
