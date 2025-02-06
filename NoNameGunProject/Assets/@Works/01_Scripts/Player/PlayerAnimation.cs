@@ -25,7 +25,6 @@ namespace NoNameGun.Players
             _animator = GetComponent<Animator>();
             _player = GetComponentInParent<Player>();
 
-            // 입력 값 변경 이벤트 구독
             _player.PlayerMovement.OnMovement += UpdateMoveAnimation;
         }
 
@@ -36,57 +35,28 @@ namespace NoNameGun.Players
 
         private void Update()
         {
-            SetPlayerHandTargetTrm();
-        }
+            if (!IsOwner) return;
 
-        private void SetPlayerHandTargetTrm()
-        {
-            RightHandTarget.position = GunRightHandleTrm.position;
-            RightHandTarget.rotation = GunRightHandleTrm.rotation;
-
-            LeftHandTarget.position = GunLeftHandleTrm.position;
-            LeftHandTarget.rotation = GunLeftHandleTrm.rotation;
-        }
-
-        public void UpdateHandIKAnimation(float weight, bool isRight)
-        {
-            if (isRight)
-            {
-                UpdateRightHandIKAnimationServerRpc(weight);
-            }
-            else
-            {
-                UpdateLeftHandIKAnimationServerRpc(weight);
-            }
+            SetPlayerHandTargetTrmServerRpc();
         }
 
         private void UpdateMoveAnimation(Vector2 inputDir)
-        {
-            if (!IsOwner)
-            {
-                return;
-            }
-
-            UpdateMoveAnimationServerRpc(inputDir);
-        }
-
-        [ServerRpc(RequireOwnership = false)]
-        private void UpdateMoveAnimationServerRpc(Vector2 inputDir)
         {
             _animator.SetFloat("MoveX", inputDir.x);
             _animator.SetFloat("MoveY", inputDir.y);
         }
 
-        [ServerRpc(RequireOwnership = false)]
-        private void UpdateRightHandIKAnimationServerRpc(float _weight)
+        [ServerRpc]
+        private void SetPlayerHandTargetTrmServerRpc()
         {
-            RightHandRig.weight = _weight;
+            RightHandTarget.position = GunRightHandleTrm.position;
+            RightHandTarget.rotation = GunRightHandleTrm.rotation;
         }
-
-        [ServerRpc(RequireOwnership = false)]
-        private void UpdateLeftHandIKAnimationServerRpc(float _weight)
+        
+        private void UpdateHandIKWeight(float weight)
         {
-            LeftHandRig.weight = _weight;
+            RightHandRig.weight = weight;
+            LeftHandRig.weight = weight;
         }
     }
 }
