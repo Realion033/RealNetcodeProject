@@ -49,7 +49,7 @@ namespace NoNameGun.Players
                 return;
             }
 
-            _playerCam.SetActive(IsOwner);
+            _playerCam.GetComponent<Camera>().enabled = IsOwner;
         }
 
         private void HandleCameraRotation(float mouseDeltaY)

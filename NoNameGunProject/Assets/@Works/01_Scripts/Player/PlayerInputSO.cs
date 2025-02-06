@@ -38,7 +38,10 @@ namespace NoNameGun
 
         public void OnAttack(InputAction.CallbackContext context)
         {
-            //throw new System.NotImplementedException();
+            if (context.performed)
+            {
+                AttackEvt?.Invoke();
+            }
         }
 
         public void OnJump(InputAction.CallbackContext context)

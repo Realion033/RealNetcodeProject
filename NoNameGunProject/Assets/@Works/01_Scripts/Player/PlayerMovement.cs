@@ -14,6 +14,8 @@ namespace NoNameGun.Players
         [SerializeField] private Vector3 _checkerSize;
         [SerializeField] private LayerMask _whatIsGround;
 
+        public bool CanMove = true;
+
         private Player _player;
         private Rigidbody _rbCompo;
 
@@ -30,17 +32,20 @@ namespace NoNameGun.Players
         {
             _player.PlayerInput.JumpEvt -= HandleJumpEvt;
         }
-
+        
         private void Update()
         {
             if (!IsOwner) return;
 
             // 현재 입력값 가져오기
-            Vector2 inputDir = _player.PlayerInput.InputDir;
-            Vector2 mouseDelta = _player.PlayerInput.MouseDelta;
+            if (CanMove)
+            {
+                Vector2 inputDir = _player.PlayerInput.InputDir;
+                Vector2 mouseDelta = _player.PlayerInput.MouseDelta;
 
-            // 주기적으로 서버로 입력 값 전송
-            MoveServerRpc(inputDir, mouseDelta.x);
+                // 주기적으로 서버로 입력 값 전송
+                MoveServerRpc(inputDir, mouseDelta.x);
+            }
         }
 
         private void Move(Vector2 inputDir, float mouseDeltaX)

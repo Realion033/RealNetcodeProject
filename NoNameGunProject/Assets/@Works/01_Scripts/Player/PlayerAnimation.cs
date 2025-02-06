@@ -37,6 +37,10 @@ namespace NoNameGun.Players
         {
             if (!IsOwner) return;
 
+            RightHandTarget.position = GunRightHandleTrm.position;
+            RightHandTarget.rotation = GunRightHandleTrm.rotation;
+
+            //동기화를 위해 서버로 보냄
             SetPlayerHandTargetTrmServerRpc();
         }
 
@@ -52,7 +56,7 @@ namespace NoNameGun.Players
             RightHandTarget.position = GunRightHandleTrm.position;
             RightHandTarget.rotation = GunRightHandleTrm.rotation;
         }
-        
+
         private void UpdateHandIKWeight(float weight)
         {
             RightHandRig.weight = weight;
