@@ -15,7 +15,6 @@ namespace NoNameGun.Test
         {
         
         }
-
         //한글을 한번 테스트를 해볼게용
     }
 }

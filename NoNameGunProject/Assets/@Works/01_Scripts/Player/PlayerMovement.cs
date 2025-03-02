@@ -42,7 +42,6 @@ namespace NoNameGun.Players
             {
                 Vector2 inputDir = _player.PlayerInput.InputDir;
                 Vector2 mouseDelta = _player.PlayerInput.MouseDelta;
-
                 // 주기적으로 서버로 입력 값 전송
                 MoveServerRpc(inputDir, mouseDelta.x);
             }
