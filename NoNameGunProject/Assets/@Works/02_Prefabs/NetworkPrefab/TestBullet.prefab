@@ -186,6 +186,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
   _power: 100
+  _lifeTime: 2
 --- !u!114 &504891732348827738
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -311,7 +312,7 @@ TrailRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Time: 0.1
+  m_Time: 0.03
   m_PreviewTimeScale: 1
   m_Parameters:
     serializedVersion: 3

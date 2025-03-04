@@ -42,7 +42,7 @@ namespace NoNameGun.Players
 
         private void Update()
         {
-            Debug.Log($"x : {PlayerInput.InputDir.x}, y : {PlayerInput.InputDir.y}");
+            //Debug.Log($"x : {PlayerInput.InputDir.x}, y : {PlayerInput.InputDir.y}");
 
             if (_currentHealth <= 0)
             {

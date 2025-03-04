@@ -43,7 +43,7 @@ namespace NoNameGun.Weaopon
 
         private void Update()
         {
-            Debug.Log($"FirePos 위치: {FirePos.position}, 회전: {FirePos.rotation}");
+            //Debug.Log($"FirePos 위치: {FirePos.position}, 회전: {FirePos.rotation}");
         }
     }
 }

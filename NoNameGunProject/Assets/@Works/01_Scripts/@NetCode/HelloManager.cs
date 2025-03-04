@@ -8,6 +8,8 @@ namespace HelloManager
     {
         private static NetworkManager m_NetworkManager;
 
+        public static float fps;
+
         void Awake()
         {
             m_NetworkManager = GetComponent<NetworkManager>();
@@ -39,10 +41,18 @@ namespace HelloManager
         {
             var mode = m_NetworkManager.IsHost ?
                 "Host" : m_NetworkManager.IsServer ? "Server" : "Client";
-
             GUILayout.Label("Transport: " +
                 m_NetworkManager.NetworkConfig.NetworkTransport.GetType().Name);
             GUILayout.Label("Mode: " + mode);
+            GUILayout.Label("FPS : " + fps);
+        }
+
+        private float deltaTime = 0.0f;
+
+        private void Update()
+        {
+            deltaTime += (Time.unscaledDeltaTime - deltaTime) * 0.1f;
+            fps = 1.0f / deltaTime;
         }
     }
 }

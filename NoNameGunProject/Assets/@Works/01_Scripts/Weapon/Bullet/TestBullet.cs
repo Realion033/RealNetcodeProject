@@ -58,6 +58,7 @@ namespace NoNameGun
             }
 
             IDamagable damagable = collision.gameObject.GetComponent<IDamagable>();
+            
             if (damagable != null)
             {
                 damagable.ApplyDamage(10); // 피해를 적용
