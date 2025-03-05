@@ -53,8 +53,8 @@ namespace NoNameGun
         {
             if (IsOwner)
             {
-                NetworkObject.Despawn();  // 네트워크 상에서 총알 삭제
                 Destroy(gameObject); // 로컬에서 총알 삭제
+                NetworkObject.Despawn();  // 네트워크 상에서 총알 삭제
             }
 
             IDamagable damagable = collision.gameObject.GetComponent<IDamagable>();
