@@ -1186,7 +1186,7 @@ Transform:
   m_GameObject: {fileID: 2495134295892779434}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.01, y: 0.01, z: 0.01}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1208,6 +1208,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87a611ca69107474c81359dd314b5057, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   _playerInput: {fileID: 11400000, guid: d6f1417ce7965e84cbb62cc853f542ad, type: 2}
   fireRate: 0.2
   Bullet: {fileID: 2753776952020332869, guid: ae30e8e12b2e45b479f4316b6b9721c9, type: 3}
@@ -3253,7 +3254,7 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.3
+  m_Radius: 0.25
   m_Height: 1.85
   m_Direction: 1
   m_Center: {x: 0, y: 0.9, z: 0}
