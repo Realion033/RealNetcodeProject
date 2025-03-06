@@ -515,7 +515,15 @@ PrefabInstance:
       value: '@NetworkManager'
       objectReference: {fileID: 0}
     - target: {fileID: 3155974850558305629, guid: 6ddf4244c3f11ae49909a386fb0e100e, type: 3}
+      propertyPath: ConnectionData.Port
+      value: 7777
+      objectReference: {fileID: 0}
+    - target: {fileID: 3155974850558305629, guid: 6ddf4244c3f11ae49909a386fb0e100e, type: 3}
       propertyPath: ConnectionData.Address
+      value: 172.31.1.129
+      objectReference: {fileID: 0}
+    - target: {fileID: 3155974850558305629, guid: 6ddf4244c3f11ae49909a386fb0e100e, type: 3}
+      propertyPath: ConnectionData.ServerListenAddress
       value: 127.0.0.1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
