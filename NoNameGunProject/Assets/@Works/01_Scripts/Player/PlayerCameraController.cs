@@ -1,3 +1,4 @@
+using System;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -6,9 +7,11 @@ namespace NoNameGun.Players
     public class PlayerCameraController : NetworkBehaviour
     {
         [Header("Camera Settings")]
-        [SerializeField] private Transform _cameraTransform;
+        public Transform CameraTransform;
         [SerializeField] private float _cameraPitchLimit = 80f;
         [SerializeField] private GameObject _playerCam;
+
+        public float CameraAngleCalcValue;
 
         private Player _player;
         private float _cameraPitch;
@@ -29,11 +32,23 @@ namespace NoNameGun.Players
 
             Vector2 mouseDelta = _player.PlayerInput.MouseDelta;
 
-            // 클라이언트에서 직접 회전 적용 (즉각 반응)
+            CalcCameraAngle();
             HandleCameraRotation(mouseDelta.y);
-
-            // 서버에 회전 값 전송하여 동기화
             CameraRotationServerRpc(_cameraPitch);
+        }
+
+        private void CalcCameraAngle()
+        {
+            float rotationX = _player.PlayerCamera.transform.eulerAngles.x;
+
+            if (rotationX > 180f)
+                rotationX -= 360f;
+
+            float normalizedValue = 1 - ((rotationX + 80f) / 160f);
+
+            normalizedValue = Mathf.Clamp01(normalizedValue);
+            CameraAngleCalcValue = normalizedValue;
+
         }
 
         public override void OnNetworkSpawn()
@@ -54,12 +69,11 @@ namespace NoNameGun.Players
 
         private void HandleCameraRotation(float mouseDeltaY)
         {
-            if (_cameraTransform == null) return;
+            if (CameraTransform == null) return;
 
-            // 클라이언트에서 즉시 회전 적용
             _cameraPitch -= mouseDeltaY * _player.MouseSensitivity;
             _cameraPitch = Mathf.Clamp(_cameraPitch, -_cameraPitchLimit, _cameraPitchLimit);
-            _cameraTransform.rotation = Quaternion.Euler(_cameraPitch, transform.eulerAngles.y, 0f);
+            CameraTransform.rotation = Quaternion.Euler(_cameraPitch, transform.eulerAngles.y, 0f);
         }
 
         [ServerRpc]
@@ -71,9 +85,9 @@ namespace NoNameGun.Players
         [ClientRpc]
         private void CameraRotationClientRpc(float pitch)
         {
-            if (IsOwner) return; // 이미 적용한 클라이언트는 제외
+            if (IsOwner) return; 
             _cameraPitch = pitch;
-            _cameraTransform.rotation = Quaternion.Euler(_cameraPitch, transform.eulerAngles.y, 0f);
+            CameraTransform.rotation = Quaternion.Euler(_cameraPitch, transform.eulerAngles.y, 0f);
         }
     }
 }

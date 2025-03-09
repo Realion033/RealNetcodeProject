@@ -24,6 +24,7 @@ namespace NoNameGun.Players
 
         public PlayerMovement PlayerMovement { get; private set; }
         public PlayerAnimation PlayerAnim { get; private set; }
+        public PlayerCameraController PlayerCamera { get; private set; }
 
         private float _currentHealth;
         private NetworkObject _netplayer;
@@ -31,6 +32,7 @@ namespace NoNameGun.Players
         private void Awake()
         {
             PlayerMovement = GetComponent<PlayerMovement>();
+            PlayerCamera = GetComponent<PlayerCameraController>();
             PlayerAnim = GetComponentInChildren<PlayerAnimation>();
             _netplayer = GetComponent<NetworkObject>();
         }

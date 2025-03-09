@@ -20,6 +20,8 @@ namespace NoNameGun.Players
         private Animator _animator;
         private Player _player;
 
+        private float angle;
+
         private void Awake()
         {
             _animator = GetComponent<Animator>();
@@ -37,10 +39,21 @@ namespace NoNameGun.Players
         {
             if (!IsOwner) return;
 
+            HandUpdate();
+            NeckAngleUpdate();
+        }
+
+        private void NeckAngleUpdate()
+        {
+            Debug.Log(_player.PlayerCamera.CameraAngleCalcValue);
+            _animator.SetFloat("Angle", _player.PlayerCamera.CameraAngleCalcValue);
+        }
+
+        private void HandUpdate()
+        {
             RightHandTarget.position = GunRightHandleTrm.position;
             RightHandTarget.rotation = GunRightHandleTrm.rotation;
 
-            //동기화를 위해 서버로 보냄
             SetPlayerHandTargetTrmServerRpc();
         }
 

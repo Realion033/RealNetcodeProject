@@ -3324,7 +3324,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
-  _cameraTransform: {fileID: 4833278752817944847}
+  CameraTransform: {fileID: 4833278752817944847}
   _cameraPitchLimit: 80
   _playerCam: {fileID: 2500996760296809091}
 --- !u!114 &2568716733033343669
