@@ -13,9 +13,12 @@ namespace NoNameGun.Players
 
         public float CameraAngleCalcValue;
 
+        #region PRIVATE_VARIABLE
         private Player _player;
         private float _cameraPitch;
+        #endregion
 
+        #region UNITY_FUNC
         private void Awake()
         {
             _player = GetComponent<Player>();
@@ -36,7 +39,9 @@ namespace NoNameGun.Players
             HandleCameraRotation(mouseDelta.y);
             CameraRotationServerRpc(_cameraPitch);
         }
+        #endregion
 
+        #region MAIN_FUNC
         private void CalcCameraAngle()
         {
             float angle = _playerCam.transform.eulerAngles.x;
@@ -60,11 +65,6 @@ namespace NoNameGun.Players
             CameraAngleCalcValue = angle;
         }
 
-        public override void OnNetworkSpawn()
-        {
-            ManageCamera();
-        }
-
         private void ManageCamera()
         {
             if (_playerCam == null)
@@ -84,7 +84,16 @@ namespace NoNameGun.Players
             _cameraPitch = Mathf.Clamp(_cameraPitch, -_cameraPitchLimit, _cameraPitchLimit);
             CameraTransform.rotation = Quaternion.Euler(_cameraPitch, transform.eulerAngles.y, 0f);
         }
+        #endregion
 
+        #region VIRTUAL_FUNC
+        public override void OnNetworkSpawn()
+        {
+            ManageCamera();
+        }
+        #endregion
+
+        #region RPC_FUNC
         [ServerRpc]
         private void CameraRotationServerRpc(float pitch)
         {
@@ -98,5 +107,6 @@ namespace NoNameGun.Players
             _cameraPitch = pitch;
             CameraTransform.rotation = Quaternion.Euler(_cameraPitch, transform.eulerAngles.y, 0f);
         }
+        #endregion
     }
 }

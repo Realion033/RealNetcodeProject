@@ -1,13 +1,11 @@
 using Unity.Netcode;
 using UnityEngine;
 using System;
-using Unity.VisualScripting;
 
 namespace NoNameGun.Players
 {
     public class PlayerMovement : NetworkBehaviour
     {
-        //움직임 감지 액션 (추후 필요할수도?)
         public event Action<Vector2> OnMovement;
         [SerializeField] private float smoothTime = 0.1f;
 
@@ -18,12 +16,14 @@ namespace NoNameGun.Players
 
         public bool CanMove = true;
 
+        #region PRIVATE_VARIABLE
         private Player _player;
         private Rigidbody _rbCompo;
 
         private Vector2 afterMoveInput;
+        #endregion
 
-        // 컴포넌트 초기화
+        #region UNITY_FUNC
         private void Awake()
         {
             _player = GetComponent<Player>();
@@ -36,7 +36,7 @@ namespace NoNameGun.Players
         {
             _player.PlayerInput.JumpEvt -= HandleJumpEvt;
         }
-        
+
         private void Update()
         {
             if (!IsOwner) return;
@@ -51,7 +51,9 @@ namespace NoNameGun.Players
                 //Move(inputDir, mouseDelta.x);
             }
         }
+        #endregion
 
+        #region MAIN_FUNC
         private void Move(Vector2 inputDir, float mouseDeltaX)
         {
             // 이동 처리
@@ -71,7 +73,9 @@ namespace NoNameGun.Players
         public bool IsGroundDetected()
             => Physics.BoxCast(_groundCheckTrm.position, _checkerSize * 0.5f, Vector3.down,
                 Quaternion.identity, _checkerSize.y, _whatIsGround);
+        #endregion
 
+        #region EVT_FUNC
         private void HandleJumpEvt()
         {
             if (IsOwner && IsGroundDetected())
@@ -79,6 +83,22 @@ namespace NoNameGun.Players
                 JumpServerRpc(_player.JumpPower);
             }
         }
+        #endregion
+        
+        #region RPC_FUNC
+
+        [ServerRpc]
+        private void MoveServerRpc(Vector2 inputDir, float mouseDeltaX)
+        {
+            Move(inputDir, mouseDeltaX);
+        }
+
+        [ServerRpc]
+        private void JumpServerRpc(float JumpPower)
+        {
+            _rbCompo.AddForce(Vector3.up * JumpPower);
+        }
+        #endregion
 
 #if UNITY_EDITOR
         private void OnDrawGizmosSelected()
@@ -92,21 +112,5 @@ namespace NoNameGun.Players
             }
         }
 #endif
-
-        #region RPCs
-
-        [ServerRpc]
-        private void MoveServerRpc(Vector2 inputDir, float mouseDeltaX)
-        {
-            Move(inputDir, mouseDeltaX);
-        }
-
-        [ServerRpc]
-        private void JumpServerRpc(float JumpPower)
-        {
-            _rbCompo.AddForce(Vector3.up * JumpPower);
-        }
-
-        #endregion
     }
 }

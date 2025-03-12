@@ -17,11 +17,14 @@ namespace NoNameGun.Players
         public Transform GunRightHandleTrm;
         public Transform GunLeftHandleTrm;
 
+        #region PRIVATE_VARIABLE
         private Animator _animator;
         private Player _player;
 
         private float angle;
+        #endregion
 
+        #region UNITY_FUNC
         private void Awake()
         {
             _animator = GetComponent<Animator>();
@@ -42,7 +45,9 @@ namespace NoNameGun.Players
             HandUpdate();
             NeckAngleUpdate();
         }
+        #endregion
 
+        #region  MAIN_FUNC
         private void NeckAngleUpdate()
         {
             Debug.Log(_player.PlayerCamera.CameraAngleCalcValue);
@@ -62,7 +67,9 @@ namespace NoNameGun.Players
             _animator.SetFloat("MoveX", inputDir.x);
             _animator.SetFloat("MoveY", inputDir.y);
         }
+        #endregion
 
+        #region RPC_FUNC
         [ServerRpc]
         private void SetPlayerHandTargetTrmServerRpc()
         {
@@ -75,5 +82,6 @@ namespace NoNameGun.Players
             RightHandRig.weight = weight;
             LeftHandRig.weight = weight;
         }
+        #endregion
     }
 }

@@ -27,31 +27,41 @@ namespace NoNameGun.Players
         public PlayerAnimation PlayerAnim { get; private set; }
         public PlayerCameraController PlayerCamera { get; private set; }
 
+        #region PRIVATE_VARIABLE
         private float _currentHealth;
         private NetworkObject _netplayer;
+        #endregion
 
+        #region UNITY_FUNC
         private void Awake()
         {
             Init();
+
             PlayerMovement = GetComponent<PlayerMovement>();
             PlayerCamera = GetComponent<PlayerCameraController>();
             PlayerAnim = GetComponentInChildren<PlayerAnimation>();
             _netplayer = GetComponent<NetworkObject>();
-        }
 
-        public virtual void Init()
-        {
-            _currentHealth = PlayerHealth;
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
         }
 
         private void Update()
         {
 
         }
+        #endregion
+
+        #region VIRTUAL_FUNC
+        public virtual void Init()
+        {
+            _currentHealth = PlayerHealth;
+        }
 
         public void ApplyDamage(float damage)
         {
             //_currentHealth = -damage;
         }
+        #endregion
     }
 }
