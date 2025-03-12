@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace NoNameGun.Managers
 {
-    public class LobbyManager : MonoBehaviour
+    public class LobbyManager
     {
         
     }

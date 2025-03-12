@@ -2,6 +2,8 @@ using NoNameGun.Managers;
 using Unity.Netcode;
 using UnityEngine;
 
+// todo : Make LobbyManager
+
 namespace HelloManager
 {
     public class HelloManager : MonoBehaviour
