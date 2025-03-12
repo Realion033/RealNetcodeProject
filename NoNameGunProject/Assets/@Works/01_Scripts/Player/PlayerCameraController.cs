@@ -39,16 +39,25 @@ namespace NoNameGun.Players
 
         private void CalcCameraAngle()
         {
-            float rotationX = _player.PlayerCamera.transform.eulerAngles.x;
+            float angle = _playerCam.transform.eulerAngles.x;
 
-            if (rotationX > 180f)
-                rotationX -= 360f;
+            if (angle > 100)
+            {
+                angle -= 360f;
+            }
 
-            float normalizedValue = 1 - ((rotationX + 80f) / 160f);
+            angle = (-angle + 80) / 160f - 0.05f;
 
-            normalizedValue = Mathf.Clamp01(normalizedValue);
-            CameraAngleCalcValue = normalizedValue;
+            if (angle < 0)
+            {
+                angle = 0;
+            }
+            else if (angle > 1)
+            {
+                angle = 1;
+            }
 
+            CameraAngleCalcValue = angle;
         }
 
         public override void OnNetworkSpawn()
@@ -85,7 +94,7 @@ namespace NoNameGun.Players
         [ClientRpc]
         private void CameraRotationClientRpc(float pitch)
         {
-            if (IsOwner) return; 
+            if (IsOwner) return;
             _cameraPitch = pitch;
             CameraTransform.rotation = Quaternion.Euler(_cameraPitch, transform.eulerAngles.y, 0f);
         }

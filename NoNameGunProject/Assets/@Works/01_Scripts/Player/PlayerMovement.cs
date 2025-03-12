@@ -1,6 +1,7 @@
 using Unity.Netcode;
 using UnityEngine;
 using System;
+using Unity.VisualScripting;
 
 namespace NoNameGun.Players
 {
@@ -8,6 +9,7 @@ namespace NoNameGun.Players
     {
         //움직임 감지 액션 (추후 필요할수도?)
         public event Action<Vector2> OnMovement;
+        [SerializeField] private float smoothTime = 0.1f;
 
         [Header("Collision Detection")]
         [SerializeField] private Transform _groundCheckTrm;
@@ -18,6 +20,8 @@ namespace NoNameGun.Players
 
         private Player _player;
         private Rigidbody _rbCompo;
+
+        private Vector2 afterMoveInput;
 
         // 컴포넌트 초기화
         private void Awake()
@@ -51,15 +55,17 @@ namespace NoNameGun.Players
         private void Move(Vector2 inputDir, float mouseDeltaX)
         {
             // 이동 처리
-            Vector3 moveDirection = transform.forward * inputDir.y + transform.right * inputDir.x;
-            _rbCompo.MovePosition(_rbCompo.position + moveDirection.normalized * _player.MoveSpeed * Time.deltaTime);
+            afterMoveInput = Vector2.Lerp(afterMoveInput, inputDir, smoothTime);
+            Vector3 dir = new Vector3(afterMoveInput.x, 0, afterMoveInput.y);
+            dir = transform.TransformDirection(dir);
+            _rbCompo.linearVelocity = new Vector3(dir.x * _player.MoveSpeed, _rbCompo.linearVelocity.y, dir.z * _player.MoveSpeed);
 
             // 캐릭터 회전 처리 (좌우)
             Quaternion deltaRotation = Quaternion.Euler(0f, mouseDeltaX * _player.MouseSensitivity, 0f);
             _rbCompo.MoveRotation(_rbCompo.rotation * deltaRotation);
 
             // 이동 이벤트 발생
-            OnMovement?.Invoke(inputDir);
+            OnMovement?.Invoke(afterMoveInput);
         }
 
         public bool IsGroundDetected()

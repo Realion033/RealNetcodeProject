@@ -1,17 +1,18 @@
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.PlayerLoop;
 
 namespace NoNameGun.Players
 {
-    public enum PlayerStateEnum
-    {
-        Idle,
-        Run,
-        Fall,
-        Attack,
-        Reload,
-        Dash
-    }
+    // public enum PlayerStateEnum //fsm으로 하는게 비효울적일듯 플레이어는 짜피 하나 만드는데 ㅇㅇ
+    // {
+    //     Idle,
+    //     Run,
+    //     Fall,
+    //     Attack,
+    //     Reload,
+    //     Dash
+    // }
     public class Player : MonoBehaviour, IDamagable
     {
         [field: SerializeField] public PlayerInputSO PlayerInput { get; private set; }
@@ -31,31 +32,26 @@ namespace NoNameGun.Players
 
         private void Awake()
         {
+            Init();
             PlayerMovement = GetComponent<PlayerMovement>();
             PlayerCamera = GetComponent<PlayerCameraController>();
             PlayerAnim = GetComponentInChildren<PlayerAnimation>();
             _netplayer = GetComponent<NetworkObject>();
         }
 
-        private void Start()
+        public virtual void Init()
         {
             _currentHealth = PlayerHealth;
         }
 
         private void Update()
         {
-            //Debug.Log($"x : {PlayerInput.InputDir.x}, y : {PlayerInput.InputDir.y}");
 
-            if (_currentHealth <= 0)
-            {
-                Debug.Log("Die");
-                gameObject.SetActive(false);
-            }
         }
 
         public void ApplyDamage(float damage)
         {
-            _currentHealth = -damage;
+            //_currentHealth = -damage;
         }
     }
 }

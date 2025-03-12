@@ -459,8 +459,8 @@ SkinnedMeshRenderer:
   m_BlendShapeWeights: []
   m_RootBone: {fileID: 4007569864701484686}
   m_AABB:
-    m_Center: {x: 0.0000686869, y: -0.0057935175, z: -0.0027987694}
-    m_Extent: {x: 0.043609943, y: 0.042294696, z: 0.006816607}
+    m_Center: {x: 0.0000686869, y: -0.0057935193, z: 0.0014770273}
+    m_Extent: {x: 0.043609943, y: 0.042294696, z: 0.056097843}
   m_DirtyAABB: 0
 --- !u!1 &1435710744328464227
 GameObject:
@@ -1170,6 +1170,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3020701216517995280}
   - component: {fileID: 347499078276393859}
+  - component: {fileID: 7650545444938310672}
   m_Layer: 0
   m_Name: DoubleBarrel
   m_TagString: Untagged
@@ -1213,6 +1214,28 @@ MonoBehaviour:
   fireRate: 0.2
   Bullet: {fileID: 2753776952020332869, guid: ae30e8e12b2e45b479f4316b6b9721c9, type: 3}
   FirePos: {fileID: 5554295830585520522}
+--- !u!95 &7650545444938310672
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2495134295892779434}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: eefd637dd7b60f44bb66bfc8c4e7fead, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &2500996760296809091
 GameObject:
   m_ObjectHideFlags: 0
@@ -1921,7 +1944,7 @@ Transform:
   m_GameObject: {fileID: 3994764655042156254}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.14, y: -0.15, z: 0.28}
+  m_LocalPosition: {x: 0.11, y: -0.15, z: 0.28}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3122,8 +3145,8 @@ SkinnedMeshRenderer:
   m_BlendShapeWeights: []
   m_RootBone: {fileID: 4007569864701484686}
   m_AABB:
-    m_Center: {x: 0.00009580888, y: -0.003076749, z: -0.0009155208}
-    m_Extent: {x: 0.04416272, y: 0.05213207, z: 0.013649366}
+    m_Center: {x: -0.0037901923, y: -0.00060626864, z: -0.002038449}
+    m_Extent: {x: 0.054277435, y: 0.06374945, z: 0.057119213}
   m_DirtyAABB: 0
 --- !u!1 &7172008234619209737
 GameObject:
@@ -3327,6 +3350,7 @@ MonoBehaviour:
   CameraTransform: {fileID: 4833278752817944847}
   _cameraPitchLimit: 80
   _playerCam: {fileID: 2500996760296809091}
+  CameraAngleCalcValue: 0
 --- !u!114 &2568716733033343669
 MonoBehaviour:
   m_ObjectHideFlags: 0
