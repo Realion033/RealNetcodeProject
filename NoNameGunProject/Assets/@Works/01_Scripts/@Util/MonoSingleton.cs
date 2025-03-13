@@ -1,5 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
+// DONT NEED MORE
+
 using UnityEngine;
 
 public class MonoSingleton<T> : MonoBehaviour where T : MonoBehaviour
@@ -14,9 +14,8 @@ public class MonoSingleton<T> : MonoBehaviour where T : MonoBehaviour
         }
         else if (Instance != this)
         {
-            Destroy(gameObject); 
+            Destroy(gameObject);
             return;
         }
     }
-
 }

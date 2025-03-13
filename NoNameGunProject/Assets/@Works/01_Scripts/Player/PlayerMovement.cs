@@ -1,7 +1,6 @@
 using Unity.Netcode;
 using UnityEngine;
 using System;
-using NUnit.Framework;
 
 namespace NoNameGun.Players
 {
