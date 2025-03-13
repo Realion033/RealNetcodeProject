@@ -85,7 +85,7 @@ namespace NoNameGun.Players
         }
         #endregion
         
-        #region RPC_FUNC
+                                #region RPC_FUNC
 
         [ServerRpc]
         private void MoveServerRpc(Vector2 inputDir, float mouseDeltaX)
