@@ -11,7 +11,7 @@ namespace NoNameGun
         //입력 액션이벤트
         public event Action AttackEvt;
         public event Action JumpEvt;
-        public event Action SprintEvt;
+        public event Action<bool> SprintEvt;
 
         public Vector2 InputDir { get; private set; }
         public Vector2 MouseDelta { get; private set; }
@@ -64,7 +64,14 @@ namespace NoNameGun
 
         public void OnSprint(InputAction.CallbackContext context)
         {
-            //throw new System.NotImplementedException();
+            if (context.performed)
+            {
+                SprintEvt?.Invoke(true);
+            }
+            else if (context.canceled)
+            {
+                SprintEvt?.Invoke(false);
+            }
         }
 
         #endregion

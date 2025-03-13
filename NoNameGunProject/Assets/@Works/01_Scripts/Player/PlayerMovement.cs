@@ -1,13 +1,15 @@
 using Unity.Netcode;
 using UnityEngine;
 using System;
+using NUnit.Framework;
 
 namespace NoNameGun.Players
 {
     public class PlayerMovement : NetworkBehaviour
     {
         public event Action<Vector2> OnMovement;
-        [SerializeField] private float smoothTime = 0.1f;
+        [SerializeField] private float _smoothTime = 0.1f;
+        [SerializeField] private float _sprintMultiplier = 1.5f;
 
         [Header("Collision Detection")]
         [SerializeField] private Transform _groundCheckTrm;
@@ -20,7 +22,8 @@ namespace NoNameGun.Players
         private Player _player;
         private Rigidbody _rbCompo;
 
-        private Vector2 afterMoveInput;
+        private Vector2 _afterMoveInput;
+        private bool _isSprinting = false;
         #endregion
 
         #region UNITY_FUNC
@@ -30,11 +33,13 @@ namespace NoNameGun.Players
             _rbCompo = GetComponent<Rigidbody>();
 
             _player.PlayerInput.JumpEvt += HandleJumpEvt;
+            _player.PlayerInput.SprintEvt += HandleSprintEvt;
         }
 
         private void OnDisable()
         {
             _player.PlayerInput.JumpEvt -= HandleJumpEvt;
+            _player.PlayerInput.SprintEvt -= HandleSprintEvt;
         }
 
         private void Update()
@@ -56,18 +61,18 @@ namespace NoNameGun.Players
         #region MAIN_FUNC
         private void Move(Vector2 inputDir, float mouseDeltaX)
         {
-            // 이동 처리
-            afterMoveInput = Vector2.Lerp(afterMoveInput, inputDir, smoothTime);
-            Vector3 dir = new Vector3(afterMoveInput.x, 0, afterMoveInput.y);
-            dir = transform.TransformDirection(dir);
-            _rbCompo.linearVelocity = new Vector3(dir.x * _player.MoveSpeed, _rbCompo.linearVelocity.y, dir.z * _player.MoveSpeed);
+            float multiplier = _isSprinting ? _sprintMultiplier : 1;
 
-            // 캐릭터 회전 처리 (좌우)
+            _afterMoveInput = Vector2.Lerp(_afterMoveInput, inputDir, _smoothTime);
+            Vector3 dir = new Vector3(_afterMoveInput.x, 0, _afterMoveInput.y);
+            dir = transform.TransformDirection(dir);
+            _rbCompo.linearVelocity = new Vector3(dir.x * _player.MoveSpeed * multiplier,
+            _rbCompo.linearVelocity.y, dir.z * _player.MoveSpeed * multiplier);
+
             Quaternion deltaRotation = Quaternion.Euler(0f, mouseDeltaX * _player.MouseSensitivity, 0f);
             _rbCompo.MoveRotation(_rbCompo.rotation * deltaRotation);
 
-            // 이동 이벤트 발생
-            OnMovement?.Invoke(afterMoveInput);
+            OnMovement?.Invoke(_afterMoveInput);
         }
 
         public bool IsGroundDetected()
@@ -83,9 +88,14 @@ namespace NoNameGun.Players
                 JumpServerRpc(_player.JumpPower);
             }
         }
+
+        private void HandleSprintEvt(bool isSprint)
+        {
+            _isSprinting = isSprint;
+        }
         #endregion
-        
-                                #region RPC_FUNC
+
+        #region RPC_FUNC
 
         [ServerRpc]
         private void MoveServerRpc(Vector2 inputDir, float mouseDeltaX)

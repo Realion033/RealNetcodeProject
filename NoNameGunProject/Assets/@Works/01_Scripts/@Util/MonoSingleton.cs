@@ -14,7 +14,7 @@ public class MonoSingleton<T> : MonoBehaviour where T : MonoBehaviour
         }
         else if (Instance != this)
         {
-            Destroy(gameObject); // 기존 인스턴스가 있으면 제거
+            Destroy(gameObject); 
             return;
         }
     }
