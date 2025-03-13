@@ -50,7 +50,6 @@ namespace NoNameGun.Players
         #region  MAIN_FUNC
         private void NeckAngleUpdate()
         {
-            Debug.Log(_player.PlayerCamera.CameraAngleCalcValue);
             _animator.SetFloat("Angle", _player.PlayerCamera.CameraAngleCalcValue);
         }
 
