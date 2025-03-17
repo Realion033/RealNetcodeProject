@@ -51,18 +51,21 @@ namespace NoNameGun
         // 충돌 시 총알 삭제
         private void OnCollisionEnter(Collision collision)
         {
-            if (IsOwner)
+            // IsOwner가 true이고, 네트워크 오브젝트가 스폰된 상태일 때만 Despawn을 호출
+            if (IsOwner && NetworkObject.IsSpawned)
             {
-                Destroy(gameObject); // 로컬에서 총알 삭제
                 NetworkObject.Despawn();  // 네트워크 상에서 총알 삭제
+                Destroy(gameObject);      // 로컬에서 총알 삭제
             }
 
+            // 충돌한 객체가 IDamagable 인터페이스를 구현한 객체인 경우
             IDamagable damagable = collision.gameObject.GetComponent<IDamagable>();
-            
+
             if (damagable != null)
             {
                 damagable.ApplyDamage(10); // 피해를 적용
             }
         }
+
     }
 }
