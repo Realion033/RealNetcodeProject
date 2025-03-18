@@ -1102,7 +1102,7 @@ Transform:
   m_GameObject: {fileID: 2500996760296809091}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.4, z: 0.37}
+  m_LocalPosition: {x: 0, y: 1.4, z: 0.365}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2980,8 +2980,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <PlayerInput>k__BackingField: {fileID: 11400000, guid: d6f1417ce7965e84cbb62cc853f542ad, type: 2}
   PlayerHealth: 100
-  MoveSpeed: 5
-  JumpPower: 300
+  MoveSpeed: 5.5
+  JumpPower: 380
   MouseSensitivity: 0.1
 --- !u!114 &6340908045133752171
 MonoBehaviour:
@@ -3013,8 +3013,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
-  _smoothTime: 0.1
-  _sprintMultiplier: 1.5
+  _smoothTime: 0.077
+  _sprintMultiplier: 1.6
   _groundCheckTrm: {fileID: 2153225478886318288}
   _checkerSize: {x: 0.8, y: 0.15, z: 0.8}
   _whatIsGround:
@@ -3069,7 +3069,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7172008234619209737}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: bbef57f080c4ddb48810b2f80ef99e00, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -3081,7 +3081,7 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.43
+  m_Radius: 0.6
   m_Height: 1.85
   m_Direction: 1
   m_Center: {x: 0, y: 0.9, z: 0}

@@ -18,6 +18,7 @@ namespace NoNameGun.Players
         public bool CanMove = true;
 
         #region PRIVATE_VARIABLE
+        private Vector3 _cachedHorizontalVelocity = Vector3.zero; // 점프 시 저장할 수평 속도
         private Player _player;
         private Rigidbody _rbCompo;
 
@@ -61,12 +62,34 @@ namespace NoNameGun.Players
         private void Move(Vector2 inputDir, float mouseDeltaX)
         {
             float multiplier = _isSprinting ? _sprintMultiplier : 1;
+            bool isGrounded = IsGroundDetected(); // 현재 착지 여부 확인
 
             _afterMoveInput = Vector2.Lerp(_afterMoveInput, inputDir, _smoothTime);
             Vector3 dir = new Vector3(_afterMoveInput.x, 0, _afterMoveInput.y);
             dir = transform.TransformDirection(dir);
-            _rbCompo.linearVelocity = new Vector3(dir.x * _player.MoveSpeed * multiplier,
-            _rbCompo.linearVelocity.y, dir.z * _player.MoveSpeed * multiplier);
+
+            Vector3 targetVelocity;
+
+            if (!isGrounded)
+            {
+                // 공중 이동 시 가던 방향 속도 유지 (x, z 속도)
+                targetVelocity = new Vector3(_cachedHorizontalVelocity.x,
+                                            _rbCompo.linearVelocity.y,
+                                            _cachedHorizontalVelocity.z);
+            }
+            else
+            {
+                // 착지 후 이동 속도를 부드럽게 변화시킴
+                targetVelocity = new Vector3(dir.x * _player.MoveSpeed * multiplier,
+                                            _rbCompo.linearVelocity.y,
+                                             dir.z * _player.MoveSpeed * multiplier);
+
+                // 착지 시 현재 속도를 저장
+                _cachedHorizontalVelocity = new Vector3(targetVelocity.x, 0, targetVelocity.z);
+            }
+
+            // Lerp를 사용하여 서서히 속도 변화 적용
+            _rbCompo.linearVelocity = Vector3.Lerp(_rbCompo.linearVelocity, targetVelocity, 0.1f);
 
             Quaternion deltaRotation = Quaternion.Euler(0f, mouseDeltaX * _player.MouseSensitivity, 0f);
             _rbCompo.MoveRotation(_rbCompo.rotation * deltaRotation);
@@ -84,6 +107,10 @@ namespace NoNameGun.Players
         {
             if (IsOwner && IsGroundDetected())
             {
+                // 점프하기 전에 현재 수평 속도 저장
+                _cachedHorizontalVelocity = new Vector3(_rbCompo.linearVelocity.x, 0, _rbCompo.linearVelocity.z);
+
+                // 점프 적용
                 JumpServerRpc(_player.JumpPower);
             }
         }
