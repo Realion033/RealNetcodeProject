@@ -2,6 +2,7 @@ using UnityEngine;
 using Unity.Netcode;
 using UnityEngine.Animations.Rigging;
 using System;
+using Unity.VisualScripting;
 
 namespace NoNameGun.Players
 {
@@ -22,6 +23,7 @@ namespace NoNameGun.Players
         private Player _player;
 
         private float angle;
+        private bool isNull = true;
         #endregion
 
         #region UNITY_FUNC
@@ -41,7 +43,6 @@ namespace NoNameGun.Players
         private void Update()
         {
             if (!IsOwner) return;
-
             HandUpdate();
             NeckAngleUpdate();
         }
@@ -55,6 +56,22 @@ namespace NoNameGun.Players
 
         private void HandUpdate()
         {
+            if (GunRightHandleTrm == null)
+            {
+                // 💡 계속해서 갱신 시도 (한 번 null이어도 계속 확인)
+                GunRightHandleTrm = _player.PlayerShoot?.currentGun?.transform.Find(Define.GunIKHandle.RightHandIK);
+
+                if (GunRightHandleTrm == null)
+                {
+                    Debug.LogWarning("[PlayerAnimation] GunRightHandleTrm이 아직 설정되지 않았습니다.");
+                    return;
+                }
+                else
+                {
+                    Debug.Log("[PlayerAnimation] GunRightHandleTrm이 정상적으로 할당되었습니다.");
+                }
+            }
+
             RightHandTarget.position = GunRightHandleTrm.position;
             RightHandTarget.rotation = GunRightHandleTrm.rotation;
 

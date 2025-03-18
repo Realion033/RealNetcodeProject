@@ -26,6 +26,7 @@ namespace NoNameGun.Players
         public PlayerMovement PlayerMovement { get; private set; }
         public PlayerAnimation PlayerAnim { get; private set; }
         public PlayerCameraController PlayerCamera { get; private set; }
+        public PlayerShooter PlayerShoot { get; private set; }
 
         #region PRIVATE_VARIABLE
         private float _currentHealth;
@@ -39,7 +40,9 @@ namespace NoNameGun.Players
 
             PlayerMovement = GetComponent<PlayerMovement>();
             PlayerCamera = GetComponent<PlayerCameraController>();
+            PlayerShoot = GetComponent<PlayerShooter>();
             PlayerAnim = GetComponentInChildren<PlayerAnimation>();
+            
             _netplayer = GetComponent<NetworkObject>();
 
             Cursor.visible = false;

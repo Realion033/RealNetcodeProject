@@ -7,4 +7,10 @@ public static class Define
         PointerUp,
         Drag
     }
+
+    public static class GunIKHandle
+    {
+        public const string RightHandIK = "RIGHTHANDLE";
+        public const string LeftHandIK = "LEFTHANDLE";
+    }
 }

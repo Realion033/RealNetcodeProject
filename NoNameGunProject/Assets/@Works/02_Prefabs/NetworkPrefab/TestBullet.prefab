@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 4305779344168551972}
   - component: {fileID: 7367102464015973572}
   - component: {fileID: 4430631109742703272}
-  - component: {fileID: 2023765588420208334}
   m_Layer: 0
   m_Name: Visual
   m_TagString: Untagged
@@ -87,27 +86,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &2023765588420208334
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1939888628765066088}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2753776952020332869
 GameObject:
   m_ObjectHideFlags: 0
@@ -321,16 +299,25 @@ TrailRenderer:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0
-        value: 1
-        inSlope: 0
-        outSlope: 0
+        time: 0.006126404
+        value: 0
+        inSlope: 2.6971998
+        outSlope: 2.6971998
         tangentMode: 0
         weightedMode: 0
         inWeight: 0.33333334
-        outWeight: 0.33333334
+        outWeight: 0.47101733
       - serializedVersion: 3
-        time: 1
+        time: 0.2841062
+        value: 0.47936812
+        inSlope: 0.21524784
+        outSlope: 0.21524784
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33007908
+      - serializedVersion: 3
+        time: 0.840744
         value: 0
         inSlope: 0
         outSlope: 0
@@ -402,5 +389,5 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.05
+  m_Radius: 0.25
   m_Center: {x: 0, y: 0, z: 0}
