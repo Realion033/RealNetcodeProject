@@ -51,14 +51,12 @@ namespace NoNameGun.Players
             {
                 Vector2 inputDir = _player.PlayerInput.InputDir;
                 Vector2 mouseDelta = _player.PlayerInput.MouseDelta;
-                // Rpc로 동기화
-                MoveServerRpc(inputDir, mouseDelta.x);
-                //Move(inputDir, mouseDelta.x);
+
+                // 클라이언트에서 즉시 이동 처리
+                Move(inputDir, mouseDelta.x);
             }
         }
-        #endregion
 
-        #region MAIN_FUNC
         private void Move(Vector2 inputDir, float mouseDeltaX)
         {
             float multiplier = _isSprinting ? _sprintMultiplier : 1;
@@ -114,9 +112,7 @@ namespace NoNameGun.Players
             {
                 // 점프하기 전에 현재 수평 속도 저장
                 _cachedHorizontalVelocity = new Vector3(_rbCompo.linearVelocity.x, 0, _rbCompo.linearVelocity.z);
-
-                // 점프 적용
-                JumpServerRpc(_player.JumpPower);
+                _rbCompo.AddForce(Vector3.up * _player.JumpPower);
             }
         }
 
@@ -128,17 +124,17 @@ namespace NoNameGun.Players
 
         #region RPC_FUNC
 
-        [ServerRpc]
-        private void MoveServerRpc(Vector2 inputDir, float mouseDeltaX)
-        {
-            Move(inputDir, mouseDeltaX);
-        }
+        // [ServerRpc]
+        // private void MoveServerRpc(Vector2 inputDir, float mouseDeltaX)
+        // {
+        //     Move(inputDir, mouseDeltaX);
+        // }
 
-        [ServerRpc]
-        private void JumpServerRpc(float JumpPower)
-        {
-            _rbCompo.AddForce(Vector3.up * JumpPower);
-        }
+        // [ServerRpc]
+        // private void JumpServerRpc(float JumpPower)
+        // {
+        //     _rbCompo.AddForce(Vector3.up * JumpPower);
+        // }
         #endregion
 
 #if UNITY_EDITOR
