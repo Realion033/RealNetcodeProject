@@ -4,7 +4,7 @@ using UnityEngine.PlayerLoop;
 
 namespace NoNameGun.Players
 {
-    // public enum PlayerStateEnum //fsm으로 하는게 비효울적일듯 플레이어는 짜피 하나 만드는데 ㅇㅇ
+    // public enum PlayerStateEnum // fsm으로 하는게 비효울적일듯 플레이어는 짜피 하나 만드는데 ㅇㅇ
     // {
     //     Idle,
     //     Run,

@@ -2917,7 +2917,7 @@ GameObject:
   - component: {fileID: 1636828745802594009}
   - component: {fileID: 5443562181779795545}
   - component: {fileID: 2475941046417270063}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3033,6 +3033,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5d2b193858ed1c44b226b52e3d2c921, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   _gunPivotPos: {fileID: 1786082003736063098}
   currentGun: {fileID: 349323415217594943, guid: edea79d013277a34997ef86c28fdb4ec, type: 3}
 --- !u!54 &5340636463536188514
@@ -3054,7 +3055,7 @@ Rigidbody:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 128
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1

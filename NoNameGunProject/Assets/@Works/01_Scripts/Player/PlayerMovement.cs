@@ -72,30 +72,35 @@ namespace NoNameGun.Players
 
             if (!isGrounded)
             {
-                // 공중 이동 시 가던 방향 속도 유지 (x, z 속도)
-                targetVelocity = new Vector3(_cachedHorizontalVelocity.x,
-                                            _rbCompo.linearVelocity.y,
-                                            _cachedHorizontalVelocity.z);
+                // 공중에서 입력 방향에 따라 이동 가능하게 설정
+                targetVelocity = new Vector3(dir.x * _player.MoveSpeed * multiplier,
+                                            _rbCompo.linearVelocity.y,  // Y축 속도는 계속 중력에 의해 조정
+                                            dir.z * _player.MoveSpeed * multiplier);
+
+                // 공중에서의 이동 방향을 부드럽게 조정
+                targetVelocity = Vector3.Lerp(_rbCompo.linearVelocity, targetVelocity, 0.1f);
             }
             else
             {
                 // 착지 후 이동 속도를 부드럽게 변화시킴
                 targetVelocity = new Vector3(dir.x * _player.MoveSpeed * multiplier,
                                             _rbCompo.linearVelocity.y,
-                                             dir.z * _player.MoveSpeed * multiplier);
+                                            dir.z * _player.MoveSpeed * multiplier);
 
                 // 착지 시 현재 속도를 저장
                 _cachedHorizontalVelocity = new Vector3(targetVelocity.x, 0, targetVelocity.z);
             }
 
-            // Lerp를 사용하여 서서히 속도 변화 적용
-            _rbCompo.linearVelocity = Vector3.Lerp(_rbCompo.linearVelocity, targetVelocity, 0.1f);
+            // 최종 속도 적용
+            _rbCompo.linearVelocity = targetVelocity;
 
+            // 회전 처리
             Quaternion deltaRotation = Quaternion.Euler(0f, mouseDeltaX * _player.MouseSensitivity, 0f);
             _rbCompo.MoveRotation(_rbCompo.rotation * deltaRotation);
 
             OnMovement?.Invoke(_afterMoveInput);
         }
+
 
         public bool IsGroundDetected()
             => Physics.BoxCast(_groundCheckTrm.position, _checkerSize * 0.5f, Vector3.down,

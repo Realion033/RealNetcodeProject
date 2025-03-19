@@ -1,10 +1,11 @@
 using System;
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace NoNameGun.Players
 {
-    public class PlayerShooter : MonoBehaviour
+    public class PlayerShooter : NetworkBehaviour
     {
         [SerializeField] private Transform _gunPivotPos;
         public GameObject currentGun;
@@ -22,7 +23,7 @@ namespace NoNameGun.Players
             _rightHandPos = currentGun.transform.Find(Define.GunIKHandle.RightHandIK);
         }
 
-        private void Start()
+        public override void OnNetworkSpawn()
         {
             GameObject newGun = Instantiate(currentGun, _gunPivotPos.position, Quaternion.identity, _gunPivotPos);
 
