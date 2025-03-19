@@ -52,8 +52,8 @@ namespace NoNameGun.Players
                 Vector2 inputDir = _player.PlayerInput.InputDir;
                 Vector2 mouseDelta = _player.PlayerInput.MouseDelta;
                 // Rpc로 동기화
-                MoveServerRpc(inputDir, mouseDelta.x);
-                //Move(inputDir, mouseDelta.x);
+                //MoveServerRpc(inputDir, mouseDelta.x);
+                Move(inputDir, mouseDelta.x);
             }
         }
         #endregion
