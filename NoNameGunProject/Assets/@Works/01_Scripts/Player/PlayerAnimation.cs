@@ -11,7 +11,7 @@ namespace NoNameGun.Players
         [Header("IK Setting")]
         public Rig RightHandRig;
         public Rig LeftHandRig;
-        public Transform RightHandTarget;
+        //public Transform RightHandTarget;
         public Transform LeftHandTarget;
 
         [Header("Gun Hands")]
@@ -43,7 +43,7 @@ namespace NoNameGun.Players
         private void Update()
         {
             if (!IsOwner) return;
-            HandUpdate();
+            //HandUpdate();
             NeckAngleUpdate();
         }
         #endregion
@@ -72,10 +72,10 @@ namespace NoNameGun.Players
                 }
             }
 
-            RightHandTarget.position = GunRightHandleTrm.position;
-            RightHandTarget.rotation = GunRightHandleTrm.rotation;
+            //RightHandTarget.position = GunRightHandleTrm.position;
+            //RightHandTarget.rotation = GunRightHandleTrm.rotation;
 
-            SetPlayerHandTargetTrmServerRpc();
+            //SetPlayerHandTargetTrmServerRpc();
         }
 
         private void UpdateMoveAnimation(Vector2 inputDir)
@@ -86,18 +86,18 @@ namespace NoNameGun.Players
         #endregion
 
         #region RPC_FUNC
-        [ServerRpc]
-        private void SetPlayerHandTargetTrmServerRpc()
-        {
-            RightHandTarget.position = GunRightHandleTrm.position;
-            RightHandTarget.rotation = GunRightHandleTrm.rotation;
-        }
+        // [ServerRpc]
+        // private void SetPlayerHandTargetTrmServerRpc()
+        // {
+        //     RightHandTarget.position = GunRightHandleTrm.position;
+        //     RightHandTarget.rotation = GunRightHandleTrm.rotation;
+        // }
 
-        private void UpdateHandIKWeight(float weight)
-        {
-            RightHandRig.weight = weight;
-            LeftHandRig.weight = weight;
-        }
+        // private void UpdateHandIKWeight(float weight)
+        // {
+        //     RightHandRig.weight = weight;
+        //     LeftHandRig.weight = weight;
+        // }
         #endregion
     }
 }

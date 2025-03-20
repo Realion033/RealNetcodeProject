@@ -37,7 +37,7 @@ namespace NoNameGun.Players
 
             CalcCameraAngle();
             HandleCameraRotation(mouseDelta.y);
-            CameraRotationServerRpc(_cameraPitch);
+            //CameraRotationServerRpc(_cameraPitch);
         }
         #endregion
 
@@ -94,19 +94,19 @@ namespace NoNameGun.Players
         #endregion
 
         #region RPC_FUNC
-        [ServerRpc]
-        private void CameraRotationServerRpc(float pitch)
-        {
-            CameraRotationClientRpc(pitch);
-        }
+        // [ServerRpc]
+        // private void CameraRotationServerRpc(float pitch)
+        // {
+        //     CameraRotationClientRpc(pitch);
+        // }
 
-        [ClientRpc]
-        private void CameraRotationClientRpc(float pitch)
-        {
-            if (IsOwner) return;
-            _cameraPitch = pitch;
-            CameraTransform.rotation = Quaternion.Euler(_cameraPitch, transform.eulerAngles.y, 0f);
-        }
+        // [ClientRpc]
+        // private void CameraRotationClientRpc(float pitch)
+        // {
+        //     if (IsOwner) return;
+        //     _cameraPitch = pitch;
+        //     CameraTransform.rotation = Quaternion.Euler(_cameraPitch, transform.eulerAngles.y, 0f);
+        // }
         #endregion
     }
 }
