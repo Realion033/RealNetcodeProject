@@ -62,7 +62,7 @@ namespace NoNameGun.Players
             float multiplier = _isSprinting ? _sprintMultiplier : 1;
             bool isGrounded = IsGroundDetected(); // 현재 착지 여부 확인
 
-            _afterMoveInput = Vector2.Lerp(_afterMoveInput, inputDir, _smoothTime);
+            _afterMoveInput = Vector2.Lerp(_afterMoveInput, inputDir, _smoothTime * Time.deltaTime);
             Vector3 dir = new Vector3(_afterMoveInput.x, 0, _afterMoveInput.y);
             dir = transform.TransformDirection(dir);
 
@@ -76,7 +76,7 @@ namespace NoNameGun.Players
                                             dir.z * _player.MoveSpeed * multiplier);
 
                 // 공중에서의 이동 방향을 부드럽게 조정
-                targetVelocity = Vector3.Lerp(_rbCompo.linearVelocity, targetVelocity, 0.1f);
+                targetVelocity = Vector3.Lerp(_rbCompo.linearVelocity, targetVelocity, _smoothTime * Time.deltaTime);
             }
             else
             {

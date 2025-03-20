@@ -54,29 +54,29 @@ namespace NoNameGun.Players
             _animator.SetFloat("Angle", _player.PlayerCamera.CameraAngleCalcValue);
         }
 
-        private void HandUpdate()
-        {
-            if (GunRightHandleTrm == null)
-            {
-                // 💡 계속해서 갱신 시도 (한 번 null이어도 계속 확인)
-                GunRightHandleTrm = _player.PlayerShoot?.currentGun?.transform.Find(Define.GunIKHandle.RightHandIK);
+        // private void HandUpdate()
+        // {
+        //     if (GunRightHandleTrm == null)
+        //     {
+        //         // 💡 계속해서 갱신 시도 (한 번 null이어도 계속 확인)
+        //         GunRightHandleTrm = _player.PlayerShoot?.currentGun?.transform.Find(Define.GunIKHandle.RightHandIK);
 
-                if (GunRightHandleTrm == null)
-                {
-                    Debug.LogWarning("[PlayerAnimation] GunRightHandleTrm이 아직 설정되지 않았습니다.");
-                    return;
-                }
-                else
-                {
-                    Debug.Log("[PlayerAnimation] GunRightHandleTrm이 정상적으로 할당되었습니다.");
-                }
-            }
+        //         if (GunRightHandleTrm == null)
+        //         {
+        //             Debug.LogWarning("[PlayerAnimation] GunRightHandleTrm이 아직 설정되지 않았습니다.");
+        //             return;
+        //         }
+        //         else
+        //         {
+        //             Debug.Log("[PlayerAnimation] GunRightHandleTrm이 정상적으로 할당되었습니다.");
+        //         }
+        //     }
 
-            //RightHandTarget.position = GunRightHandleTrm.position;
-            //RightHandTarget.rotation = GunRightHandleTrm.rotation;
+        //     //RightHandTarget.position = GunRightHandleTrm.position;
+        //     //RightHandTarget.rotation = GunRightHandleTrm.rotation;
 
-            //SetPlayerHandTargetTrmServerRpc();
-        }
+        //     //SetPlayerHandTargetTrmServerRpc();
+        // }
 
         private void UpdateMoveAnimation(Vector2 inputDir)
         {
