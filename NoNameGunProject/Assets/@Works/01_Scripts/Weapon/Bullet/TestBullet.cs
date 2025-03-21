@@ -24,17 +24,18 @@ namespace NoNameGun
                 return;
             }
 
-            SetFireServerRpc();
+            Vector3 fireDirection = transform.forward; // 총구의 전방 방향
+            _rbCompo.AddForce(fireDirection * _power, ForceMode.Impulse);
 
             StartCoroutine(DestroyBullet());
         }
 
-        [ServerRpc]
-        private void SetFireServerRpc()
-        {
-            Vector3 fireDirection = transform.forward; // 총구의 전방 방향
-            _rbCompo.AddForce(fireDirection * _power, ForceMode.Impulse);
-        }
+        // [ServerRpc]
+        // private void SetFireServerRpc()
+        // {
+        //     Vector3 fireDirection = transform.forward; // 총구의 전방 방향
+        //     _rbCompo.AddForce(fireDirection * _power, ForceMode.Impulse);
+        // }
 
         // 2초가 지나면 총알 삭제
         IEnumerator DestroyBullet()
