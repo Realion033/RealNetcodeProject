@@ -22,12 +22,14 @@ namespace NoNameGun.Players
             _player = GetComponent<Player>();
         }
 
-        private void Start()
+        public override void OnNetworkSpawn()
         {
             if (!IsOwner) return;
-
-            SpawnGunServerRPC();
+            GameObject currentGun = Instantiate(CurrentGun, _gunPivotPos.position, Quaternion.identity, _gunPivotPos);
+            _spawnedGunTrm = currentGun.transform;
             IsGunSpawnEvt?.Invoke(_spawnedGunTrm);
+
+            GunSpawnServerRPC();
         }
 
         void Update()
@@ -45,10 +47,11 @@ namespace NoNameGun.Players
 
         #region RPC_FUNC
         [ServerRpc]
-        private void SpawnGunServerRPC()
+        private void GunSpawnServerRPC()
         {
-            GameObject _spawnedGun = Instantiate(CurrentGun, _gunPivotPos.position, Quaternion.identity);
-            _spawnedGunTrm = _spawnedGun.transform;
+            GameObject currentGun = Instantiate(CurrentGun, _gunPivotPos.position, Quaternion.identity, _gunPivotPos);
+            _spawnedGunTrm = currentGun.transform;
+            IsGunSpawnEvt?.Invoke(_spawnedGunTrm);
         }
         #endregion
     }
