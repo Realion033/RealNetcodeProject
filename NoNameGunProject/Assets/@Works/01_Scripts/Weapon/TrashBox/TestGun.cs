@@ -30,6 +30,7 @@ namespace NoNameGun.Weaopon
             {
                 FireBulletServerRpc();  // 서버에서 총알 발사 처리
                 lastFireTime = Time.time; // 마지막 발사 시간 갱신
+                Debug.Log("asdfsadfffffff");
             }
         }
 
@@ -37,6 +38,7 @@ namespace NoNameGun.Weaopon
         [ServerRpc]
         private void FireBulletServerRpc()
         {
+            Debug.Log("asdfsadf");
             GameObject bullet = Instantiate(Bullet, FirePos.position, FirePos.rotation);
             bullet.GetComponent<NetworkObject>().Spawn();  // 네트워크 오브젝트로 스폰
         }
