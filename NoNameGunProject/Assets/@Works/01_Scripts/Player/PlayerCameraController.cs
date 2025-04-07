@@ -27,6 +27,7 @@ namespace NoNameGun.Players
         private void Start()
         {
             ManageCamera();
+            // ?
         }
 
         private void Update()
