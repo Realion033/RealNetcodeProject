@@ -4,6 +4,6 @@ namespace NoNameGun
 {
     public interface IDamagable
     {
-        public void ApplyDamage(float damage);
+        public void ApplyDamage(float damage);  
     }
 }

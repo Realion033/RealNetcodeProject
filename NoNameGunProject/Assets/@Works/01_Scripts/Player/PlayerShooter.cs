@@ -33,8 +33,7 @@ namespace NoNameGun.Players
             _spawnedGunTrm = currentGun.transform;
             IsGunSpawnEvt?.Invoke(_spawnedGunTrm);
         }
-
-
+        
         void Update()
         {
             if (!IsOwner)
