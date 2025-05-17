@@ -5,6 +5,7 @@ namespace NoNameGun.Weaopon
 {
     public abstract class GunBase : InitBase
     {
+        [SerializeField] private WeaponSO _configSO;
         protected Player _player;
 
         private void Awake()
