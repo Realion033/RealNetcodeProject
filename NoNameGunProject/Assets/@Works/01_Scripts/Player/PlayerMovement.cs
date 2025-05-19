@@ -45,7 +45,6 @@ namespace NoNameGun.Players
         private void Update()
         {
             if (!IsOwner) return;
-
             // 현재 입력값 가져오기
             if (CanMove)
             {
@@ -108,6 +107,7 @@ namespace NoNameGun.Players
         #region EVT_FUNC
         private void HandleJumpEvt()
         {
+            Debug.Log(IsGroundDetected());
             if (IsOwner && IsGroundDetected())
             {
                 // 점프하기 전에 현재 수평 속도 저장
