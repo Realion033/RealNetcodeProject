@@ -26,12 +26,6 @@ namespace NoNameGun.Players
         public override void OnNetworkSpawn()
         {
             if (!IsOwner) return;
-
-            GameObject currentGun = Instantiate(CurrentGun, _gunPivotPos.position, _gunPivotPos.rotation);
-            _gunNetworkObject = currentGun.GetComponent<NetworkObject>();
-
-            _spawnedGunTrm = currentGun.transform;
-            IsGunSpawnEvt?.Invoke(_spawnedGunTrm);
         }
         
         void Update()
@@ -48,8 +42,8 @@ namespace NoNameGun.Players
         #region MAIN_FUNC
         private void GunPosSync()
         {
-            _gunNetworkObject.transform.localPosition = _gunPivotPos.position;
-            _gunNetworkObject.transform.localRotation = _gunPivotPos.rotation;
+            // _gunNetworkObject.transform.localPosition = _gunPivotPos.position;
+            // _gunNetworkObject.transform.localRotation = _gunPivotPos.rotation;
         }
         #endregion
 
@@ -57,12 +51,12 @@ namespace NoNameGun.Players
         [ServerRpc]
         private void GunSetParentServerRPC()
         {
-            GameObject currentGun = Instantiate(CurrentGun);
-            NetworkObject gunNetworkObject = currentGun.GetComponent<NetworkObject>();
-            gunNetworkObject.TrySetParent(_gunPivotPos);
+            // GameObject currentGun = Instantiate(CurrentGun);
+            // NetworkObject gunNetworkObject = currentGun.GetComponent<NetworkObject>();
+            // gunNetworkObject.TrySetParent(_gunPivotPos);
 
-            _spawnedGunTrm = currentGun.transform;
-            IsGunSpawnEvt?.Invoke(_spawnedGunTrm);
+            // _spawnedGunTrm = currentGun.transform;
+            // IsGunSpawnEvt?.Invoke(_spawnedGunTrm);
         }
         #endregion
     }
