@@ -24,6 +24,7 @@ namespace NoNameGun.Players
 
         private Vector2 _afterMoveInput;
         private bool _isSprinting = false;
+        public bool IsGrounded = false;
         #endregion
 
         #region UNITY_FUNC
@@ -45,29 +46,29 @@ namespace NoNameGun.Players
         private void Update()
         {
             if (!IsOwner) return;
-            // 현재 입력값 가져오기
-            if (CanMove)
-            {
-                Vector2 inputDir = _player.PlayerInput.InputDir;
-                Vector2 mouseDelta = _player.PlayerInput.MouseDelta;
 
-                // 클라이언트에서 즉시 이동 처리
-                Move(inputDir, mouseDelta.x);
-            }
+            // 현재 입력값 가져오기
+            Vector2 inputDir = _player.PlayerInput.InputDir;
+            Vector2 mouseDelta = _player.PlayerInput.MouseDelta;
+
+            // 클라이언트에서 즉시 이동 처리
+            Move(inputDir, mouseDelta.x);
+
+            IsGrounded = IsGroundDetected();
         }
 
+        // 
+        
         private void Move(Vector2 inputDir, float mouseDeltaX)
         {
             float multiplier = _isSprinting ? _sprintMultiplier : 1;
-            bool isGrounded = IsGroundDetected(); // 현재 착지 여부 확인
-
             _afterMoveInput = Vector2.Lerp(_afterMoveInput, inputDir, _smoothTime * Time.deltaTime);
             Vector3 dir = new Vector3(_afterMoveInput.x, 0, _afterMoveInput.y);
             dir = transform.TransformDirection(dir);
 
             Vector3 targetVelocity;
 
-            if (!isGrounded)
+            if (!IsGrounded)
             {
                 // 공중에서 입력 방향에 따라 이동 가능하게 설정
                 targetVelocity = new Vector3(dir.x * _player.MoveSpeed * multiplier,
@@ -89,7 +90,10 @@ namespace NoNameGun.Players
             }
 
             // 최종 속도 적용
-            _rbCompo.linearVelocity = targetVelocity;
+            if (CanMove)
+            {
+                _rbCompo.linearVelocity = targetVelocity;
+            }
 
             // 회전 처리
             Quaternion deltaRotation = Quaternion.Euler(0f, mouseDeltaX * _player.MouseSensitivity, 0f);
@@ -98,6 +102,17 @@ namespace NoNameGun.Players
             OnMovement?.Invoke(_afterMoveInput);
         }
 
+        private void OnCollisionEnter(Collision collision)
+        {
+            if (collision.collider && IsGrounded == false)
+            {
+                CanMove = false;
+            }
+            else
+            {
+                CanMove = true;
+            }
+        }
 
         public bool IsGroundDetected()
             => Physics.BoxCast(_groundCheckTrm.position, _checkerSize * 0.5f, Vector3.down,
@@ -107,8 +122,7 @@ namespace NoNameGun.Players
         #region EVT_FUNC
         private void HandleJumpEvt()
         {
-            Debug.Log(IsGroundDetected());
-            if (IsOwner && IsGroundDetected())
+            if (IsOwner && IsGrounded == true)
             {
                 // 점프하기 전에 현재 수평 속도 저장
                 _cachedHorizontalVelocity = new Vector3(_rbCompo.linearVelocity.x, 0, _rbCompo.linearVelocity.z);

@@ -19454,7 +19454,12 @@ Animator:
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_AnimatePhysics: 0
-  m_WarningMessage: 
+  m_WarningMessage: "\nBinding warning: Some generic clip(s) animate transforms that
+    are already bound by a Humanoid avatar. These transforms can only be changed
+    by Humanoid clips.\n\tTransform 'LowManRightForeArm'\n\tTransform 'LowManRightHand'\n\tTransform
+    'LowManLeftArm'\n\tTransform 'LowManRightArm'\n\tTransform 'LowManLeftHand'\n\tTransform
+    'LowManLeftForeArm'\n\tTransform 'LowManRightForeArm'\n\tTransform 'LowManRightHand'\n\tTransform
+    'LowManLeftArm'\n\tTransform 'LowManRightArm'\n\tand more ..."
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
@@ -19478,6 +19483,15 @@ MonoBehaviour:
   LeftHandTarget: {fileID: 4649332136567599871}
   GunRightHandleTrm: {fileID: 5145626193119348587}
   GunLeftHandleTrm: {fileID: 0}
+  AnimParams:
+  - name: MoveX
+    type: 1
+  - name: MoveY
+    type: 1
+  - name: Angle
+    type: 1
+  - name: OnJump
+    type: 3
 --- !u!114 &2356791164456953979
 MonoBehaviour:
   m_ObjectHideFlags: 0
