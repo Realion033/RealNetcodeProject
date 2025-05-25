@@ -36,6 +36,7 @@ namespace NoNameGun.Players
         [Header("Gun Hands")]
         public Transform GunRightHandleTrm;
         public Transform GunLeftHandleTrm;
+        // public Transform GunCamPivot;
 
         [Header("Param Setting")]
         public List<AnimParam> AnimParams;
