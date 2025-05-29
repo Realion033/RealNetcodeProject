@@ -4,6 +4,7 @@ using UnityEngine;
 
 // todo : Make LobbyManager
 
+// this class only for Test
 namespace HelloManager
 {
     public class HelloManager : MonoBehaviour

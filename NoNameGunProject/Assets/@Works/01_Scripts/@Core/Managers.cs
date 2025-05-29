@@ -9,8 +9,10 @@ namespace NoNameGun.Managers
 
         #region UI_VARIABLE
         private UIManager _ui = new UIManager();
+        private MultiNetcodeManager _multi = new MultiNetcodeManager();
 
         public static UIManager UI { get { return Instance?._ui; } }
+        public static MultiNetcodeManager Multi { get { return Instance?._multi; } }
         #endregion
         private static void Init()
         {
