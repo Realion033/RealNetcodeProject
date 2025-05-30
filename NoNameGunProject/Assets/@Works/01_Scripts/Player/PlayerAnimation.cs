@@ -116,7 +116,7 @@ namespace NoNameGun.Players
 
         private void HandleGunFind(Transform transform)
         {
-            GunRightHandleTrm = transform.Find(Define.GunIKHandle.RightHandIK);
+            GunRightHandleTrm = transform.Find(Define.EGunIKHandle.RightHandIK);
         }
 
         private void HandleJumpEvt()

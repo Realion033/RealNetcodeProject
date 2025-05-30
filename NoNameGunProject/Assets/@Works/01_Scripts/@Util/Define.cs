@@ -2,13 +2,19 @@ public static class Define
 {
     public enum EUIEvent
     {
-        Click,
-        PointerDown,
-        PointerUp,
-        Drag
+        CLICK,
+        POINTERDOWN,
+        POINTERUP,
+        DRAG
     }
 
-    public static class GunIKHandle
+    public enum EGameMode
+    {
+        SINGLEPLAY,
+        MULTIPLAY
+    }
+
+    public static class EGunIKHandle
     {
         public const string RightHandIK = "RIGHTHANDLE";
         public const string LeftHandIK = "LEFTHANDLE";
